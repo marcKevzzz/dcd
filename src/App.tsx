@@ -1,10 +1,35 @@
 import { useEffect, useRef, useState } from 'react'
+import { flushSync } from 'react-dom'
 import gsap from 'gsap'
 import Lenis from 'lenis'
 import 'lenis/dist/lenis.css'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
+
+const services = [
+  {
+    number: '01',
+    title: 'Web development for agencies',
+    body: 'Motion-heavy sites and CMS builds, built closely with your designers and delivered ready for your team to own.',
+    tags: ['Astro', 'GSAP', 'React', 'TypeScript'],
+    cursor: 'web dev →',
+  },
+  {
+    number: '02',
+    title: 'AI & automation workflows',
+    body: 'Hands-on training and custom skills for tools like Claude Code, followed by the workflows your team needs. With an honest list of what not to automate.',
+    tags: ['Claude Code', 'Custom Agents', 'Tooling', 'Workflows'],
+    cursor: 'ai workflows →',
+  },
+  {
+    number: '03',
+    title: 'AI in products & systems architecture',
+    body: 'Semantic search and assistants grounded in your content, tested on the questions real users ask, answering with sources and verifiable telemetry.',
+    tags: ['RAG', 'Semantic Search', 'PostgreSQL', 'Real-time Sync'],
+    cursor: 'systems →',
+  },
+]
 
 const projects = [
   {
@@ -108,12 +133,80 @@ export default function App() {
   const [stageIndex, setStageIndex] = useState(0)
   const [stageFill, setStageFill] = useState(0)
 
+  const toggleTheme = (e?: React.MouseEvent) => {
+    let x = window.innerWidth - 80
+    let y = 46
+    if (e && e.clientX !== undefined) {
+      const rect = (e.currentTarget as HTMLElement)?.getBoundingClientRect?.()
+      if (rect) {
+        x = rect.left + rect.width / 2
+        y = rect.top + rect.height / 2
+      } else {
+        x = e.clientX
+        y = e.clientY
+      }
+    } else {
+      const btn = document.querySelector<HTMLElement>('.circle-button')
+      if (btn) {
+        const rect = btn.getBoundingClientRect()
+        x = rect.left + rect.width / 2
+        y = rect.top + rect.height / 2
+      }
+    }
+
+    const doc = document as any
+    if (!doc.startViewTransition) {
+      setLight(prev => !prev)
+      return
+    }
+
+    const endRadius = Math.hypot(
+      Math.max(x, window.innerWidth - x),
+      Math.max(y, window.innerHeight - y)
+    )
+
+    const transition = doc.startViewTransition(() => {
+      flushSync(() => {
+        setLight(prev => !prev)
+      })
+    })
+
+    transition.ready.then(() => {
+      document.documentElement.animate(
+        {
+          clipPath: [
+            `circle(0px at ${x}px ${y}px)`,
+            `circle(${endRadius}px at ${x}px ${y}px)`,
+          ],
+        },
+        {
+          duration: 650,
+          easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+          pseudoElement: '::view-transition-new(root)',
+        }
+      )
+    })
+  }
+
+  const handleServiceEnter = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect()
+    const fromTop = e.clientY - rect.top < rect.height / 2
+    e.currentTarget.style.setProperty('--origin', fromTop ? 'top' : 'bottom')
+  }
+
+  const handleServiceLeave = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect()
+    const toTop = e.clientY - rect.top < rect.height / 2
+    e.currentTarget.style.setProperty('--origin', toTop ? 'top' : 'bottom')
+  }
+
   const actions = [
     { label: 'Home', hint: '/', run: () => navigate('home') },
     { label: 'Selected work', hint: '/work', run: () => navigate('work') },
+    { label: 'Services', hint: '/services', run: () => navigate('services') },
     { label: 'Our approach', hint: '/approach', run: () => navigate('approach') },
     { label: 'The team', hint: '/team', run: () => navigate('team') },
-    { label: 'Toggle light / dark', hint: 'THEME', run: () => setLight(value => !value) },
+    { label: 'Toggle light / dark', hint: 'THEME', run: (e?: React.MouseEvent) => toggleTheme(e) },
   ].filter(action => action.label.toLowerCase().includes(query.toLowerCase()))
 
   function closeMenu() { dialog.current?.close(); smoothScroll.current?.start(); previousFocus.current?.focus() }
@@ -350,11 +443,12 @@ export default function App() {
         <a href="#home" className="brand" aria-label="dcd. home">dcd<span>.</span></a>
         <nav aria-label="Main navigation">
           <a href="#work" className="nav-link"><small>01</small> <span className="nav-label"><span className="nav-label-inner" data-label="Work">Work</span></span></a>
-          <a href="#approach" className="nav-link"><small>02</small> <span className="nav-label"><span className="nav-label-inner" data-label="Approach">Approach</span></span></a>
-          <a href="#team" className="nav-link"><small>03</small> <span className="nav-label"><span className="nav-label-inner" data-label="Team">Team</span></span></a>
+          <a href="#services" className="nav-link"><small>02</small> <span className="nav-label"><span className="nav-label-inner" data-label="Services">Services</span></span></a>
+          <a href="#approach" className="nav-link"><small>03</small> <span className="nav-label"><span className="nav-label-inner" data-label="Approach">Approach</span></span></a>
+          <a href="#team" className="nav-link"><small>04</small> <span className="nav-label"><span className="nav-label-inner" data-label="Team">Team</span></span></a>
         </nav>
         <div className="header-controls">
-          <button className="circle-button" aria-label={`Switch to ${light ? 'dark' : 'light'} theme`} onClick={() => setLight(!light)}>
+          <button className="circle-button" aria-label={`Switch to ${light ? 'dark' : 'light'} theme`} onClick={toggleTheme}>
             <svg aria-hidden="true" viewBox="0 0 20 20" width="18" height="18">
               <circle cx="10" cy="10" r="6.5" fill="none" stroke="currentColor"/>
               <path d="M10 3.5a6.5 6.5 0 0 1 0 13z" fill="currentColor"/>
@@ -448,7 +542,9 @@ export default function App() {
           {/* Desktop Pinned Stage */}
           <div className="ws is-pinned" data-work-stage>
             <div className="ws__count" aria-hidden="true">
-              <span className="ws__n">{currentProject.number}</span>
+              <span className="ws__n-wrap">
+                <span key={activeWork} className="ws__n">{currentProject.number}</span>
+              </span>
               <span className="ws__of outline-text">/03</span>
             </div>
 
@@ -474,31 +570,38 @@ export default function App() {
               </div>
             </div>
 
-            <div className="ws__panel">
-              <div className="ws__meta mono">
-                <span>{currentProject.number} / {currentProject.year}</span>
-                <span>{currentProject.stack.slice(0, 3).join(' · ')}</span>
-              </div>
-              <h3 className="ws__title">{currentProject.name}</h3>
-              <p className="mono category">{currentProject.category}</p>
-              <p className="ws__summary">{currentProject.detail}</p>
-              <div className="ws__actions">
-                <a
-                  className="button button-small"
-                  href={currentProject.url || '#work'}
-                  target={currentProject.url ? '_blank' : undefined}
-                  rel="noreferrer"
-                >
-                  Read the case study <Arrow />
-                </a>
-              </div>
-            </div>
+            {projects.map((project, i) => {
+              const status = i === activeWork ? 'is-current' : i < activeWork ? 'is-prev' : 'is-next'
+              return (
+                <div key={project.id} className={`ws__item ${status}`}>
+                  <div className="ws__panel">
+                    <div className="ws__meta mono">
+                      <span>{project.number} / {project.year}</span>
+                      <span>{project.stack.slice(0, 3).join(' · ')}</span>
+                    </div>
+                    <h3 className="ws__title">{project.name}</h3>
+                    <p className="mono category">{project.category}</p>
+                    <p className="ws__summary">{project.detail}</p>
+                    <div className="ws__actions">
+                      <a
+                        className="button button-small"
+                        href={project.url || '#work'}
+                        target={project.url ? '_blank' : undefined}
+                        rel="noreferrer"
+                      >
+                        Read the case study <Arrow />
+                      </a>
+                    </div>
+                  </div>
 
-            <div className="ws__art-container">
-              <div className="ws__art">
-                <ProjectArt project={currentProject} index={activeWork} />
-              </div>
-            </div>
+                  <div className="ws__art-container">
+                    <div className="ws__art">
+                      <ProjectArt project={project} index={i} />
+                    </div>
+                  </div>
+                </div>
+              )
+            })}
           </div>
 
           {/* Mobile / Fallback Stacked Cards */}
@@ -532,10 +635,43 @@ export default function App() {
           </div>
         </section>
 
+        {/* Services */}
+        <section id="services" className="services-section section-shell">
+          <div className="section-top mono">
+            <span>[ 03 ] SERVICES</span>
+            <a href="#contact" className="services-top-link">ALL SERVICES →</a>
+          </div>
+          <ol className="services-list">
+            {services.map(s => (
+              <li key={s.number} className="service-row">
+                <a
+                  href="#contact"
+                  className="service__link"
+                  data-cursor={s.cursor}
+                  onMouseEnter={handleServiceEnter}
+                  onMouseLeave={handleServiceLeave}
+                >
+                  <span className="service__n mono" aria-hidden="true">{s.number}</span>
+                  <h2 className="service__title">{s.title}</h2>
+                  <div className="service__content">
+                    <p className="service__body">{s.body}</p>
+                    <ul className="service__tags">
+                      {s.tags.map(t => (
+                        <li key={t} className="mono">{t}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <span className="service__arrow" aria-hidden="true">→</span>
+                </a>
+              </li>
+            ))}
+          </ol>
+        </section>
+
         {/* Team */}
         <section id="team" className="team section-shell">
           <div className="section-top mono">
-            <span>[ 03 ] THE COLLECTIVE</span>
+            <span>[ 04 ] THE COLLECTIVE</span>
             <span>04 DEVELOPERS / SHARED OWNERSHIP</span>
           </div>
           <div className="team-intro">
@@ -571,9 +707,9 @@ export default function App() {
             <p className="note">Site</p>
             <ul>
               <li><a href="#work" className="link">Work</a></li>
-              <li><a href="#approach" className="link">Services</a></li>
-              <li><a href="#team" className="link">About</a></li>
-              <li><a href="#approach" className="link">Blog</a></li>
+              <li><a href="#services" className="link">Services</a></li>
+              <li><a href="#approach" className="link">Approach</a></li>
+              <li><a href="#team" className="link">Team</a></li>
             </ul>
           </div>
           <div className="footer-col">
