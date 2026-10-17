@@ -1,0 +1,179 @@
+/* Team */
+.team {
+  padding-block: var(--section-pad-y);
+}
+.team-intro {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 40px 0 60px;
+}
+.team-intro h2 {
+  font-size: clamp(42px, 5.8vw, 84px);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1.04;
+}
+.team-intro p {
+  width: 32%;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+.team-roster {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--line);
+}
+.team-card {
+  padding: 24px 24px 28px;
+  border-right: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  transition: background-color 0.25s var(--ease-out);
+}
+.team-card:first-child { padding-left: 0; }
+.team-card:last-child { border-right: 0; }
+.team-card:hover {
+  background-color: var(--blue-line);
+}
+.team-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 9px;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+}
+.member-status {
+  font-size: 8px;
+  opacity: 0.7;
+}
+.member-mark {
+  position: relative;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  margin: 12px 0 16px;
+}
+.member-count {
+  font-size: 56px;
+  font-weight: 300;
+  letter-spacing: -0.04em;
+  opacity: 0.85;
+}
+.member-mark svg {
+  position: absolute;
+  inset: 10px 0;
+  margin: auto;
+  width: 110px;
+  height: 110px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 0.6;
+  opacity: 0.4;
+  transition: transform 0.4s var(--ease-out), opacity 0.4s var(--ease-out);
+}
+.team-card:hover .member-mark svg {
+  opacity: 0.85;
+  transform: rotate(15deg) scale(1.05);
+}
+.team-card-body {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+.member-name {
+  font-size: 19px;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  margin: 0 0 6px;
+  color: var(--fg);
+}
+.member-role {
+  font-size: 10.5px;
+  color: var(--accent);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin: 0 0 12px;
+}
+.member-bio {
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--muted);
+  margin: 0 0 20px;
+  flex-grow: 1;
+}
+.member-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 22px;
+}
+.stack-tag {
+  font-size: 9px;
+  padding: 3px 7px;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+  background: var(--bg);
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+.team-card:hover .stack-tag {
+  border-color: var(--accent);
+  color: var(--fg);
+}
+.team-card-foot {
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+.member-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.member-link:hover,
+.team-card:hover .member-link {
+  color: var(--accent);
+}
+.member-link .arrow {
+  transition: transform 0.25s var(--ease-out);
+}
+.member-link:hover .arrow {
+  transform: translate(3px, -3px);
+}
+
+@media (max-width: 1100px) {
+  .team-intro p { width: 38%; }
+  .team-roster { grid-template-columns: 1fr 1fr; }
+  .team-card { padding: 20px; border-bottom: 1px solid var(--line); }
+  .team-card:first-child { padding-left: 20px; }
+  .team-card:nth-child(2) { border-right: 0; }
+  .team-card:nth-child(3) { border-bottom: 0; }
+  .team-card:nth-child(4) { border-bottom: 0; }
+}
+
+@media (max-width: 767px) {
+  .team-intro { flex-direction: column; align-items: flex-start; gap: 16px; padding: 30px 0 40px; }
+  .team-intro h2 { font-size: 42px; }
+  .team-intro p { width: 100%; font-size: 14px; }
+  .team-roster { grid-template-columns: 1fr; }
+  .team-card { padding: 20px 0 !important; border-right: 0; border-bottom: 1px solid var(--line); }
+  .team-card:last-child { border-bottom: 0; }
+  .member-mark { height: 120px; }
+  .member-mark svg { height: 90px; width: 90px; }
+  .member-count { font-size: 44px; }
+}

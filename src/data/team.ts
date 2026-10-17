@@ -1,0 +1,48 @@
+import type { TeamMember } from '../types/team'
+
+export const teamMembers: TeamMember[] = [
+  {
+    id: 'marc-kevin',
+    slot: 'DEV / 01',
+    name: 'Marc Kevin Del Mundo',
+    role: 'Lead Architecture & Full Stack',
+    bio: 'Core application structure, domain modeling, and end-to-end integration across web and desktop platforms.',
+    stack: ['React', 'TypeScript', 'ASP.NET Core', 'PostgreSQL'],
+    github: 'https://github.com/marcKevzzz',
+    status: 'ACTIVE · COMMITTING',
+    svgShape: 'reticle',
+  },
+  {
+    id: 'alex-rivera',
+    slot: 'DEV / 02',
+    name: 'Alexander Rivera',
+    role: 'Frontend & Interaction Systems',
+    bio: 'Design tokens, hardware-accelerated animations, and responsive interface ergonomics down to the pixel.',
+    stack: ['React 19', 'GSAP Motion', 'Tailwind CSS', 'A11y'],
+    github: 'https://github.com/marcKevzzz/dcd',
+    status: 'ACTIVE · COMMITTING',
+    svgShape: 'waveform',
+  },
+  {
+    id: 'christian-reyes',
+    slot: 'DEV / 03',
+    name: 'Christian Reyes',
+    role: 'Backend & Data Infrastructure',
+    bio: 'Relational database architecture, role-based security layers, and low-latency API communication pipelines.',
+    stack: ['C# / .NET', 'Supabase', 'Express.js', 'SQL Server'],
+    github: 'https://github.com/marcKevzzz/dcd',
+    status: 'ACTIVE · COMMITTING',
+    svgShape: 'matrix',
+  },
+  {
+    id: 'rafael-santos',
+    slot: 'DEV / 04',
+    name: 'Rafael Santos',
+    role: 'DevOps & Systems Deployment',
+    bio: 'Automated CI/CD build environments, production containerization, load optimization, and server uptime.',
+    stack: ['Docker', 'CI/CD Pipelines', 'Cloud Hosting', 'Performance'],
+    github: 'https://github.com/marcKevzzz/dcd',
+    status: 'ACTIVE · COMMITTING',
+    svgShape: 'cube',
+  },
+]

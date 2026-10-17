@@ -1,0 +1,65 @@
+/* Manifesto / Approach (Unpinned & animated) */
+.manifesto {
+  padding-block: var(--section-pad-y);
+}
+.manifesto-stage {
+  margin-top: clamp(36px, 4.5vw, 60px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(12px, 2vw, 24px);
+}
+.wf-row {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+.wf-line {
+  font-size: clamp(36px, 6.8vw, 116px);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+  margin: 0;
+  width: fit-content;
+  position: relative;
+  white-space: nowrap;
+}
+.wf-row:nth-of-type(2) .wf-line {
+  margin-left: clamp(20px, 8vw, 120px);
+}
+.wf-row:nth-of-type(3) .wf-line {
+  margin-left: clamp(40px, 16vw, 240px);
+}
+.outline-text {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--muted);
+}
+.wf-solid {
+  position: absolute;
+  inset: 0;
+  color: var(--fg);
+  -webkit-text-stroke: 0;
+  clip-path: inset(-0.35em 100% -0.45em 0em);
+  will-change: clip-path;
+}
+.wf-solid__inner {
+  display: block;
+}
+.wf-dim {
+  color: var(--accent);
+  font-size: 9px;
+  white-space: nowrap;
+}
+.manifesto-body {
+  margin-top: clamp(40px, 6vw, 90px);
+  display: flex;
+  justify-content: flex-end;
+}
+.manifesto-lead {
+  width: 52%;
+  max-width: 760px;
+  font-size: clamp(17px, 1.35vw, 24px);
+  line-height: 1.55;
+  letter-spacing: -0.015em;
+  color: var(--fg);
+}

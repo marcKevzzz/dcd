@@ -1,0 +1,100 @@
+/* Shortcut dialog & accessibility skip-link */
+.skip-link {
+  position: fixed;
+  top: -100px;
+  left: 20px;
+  z-index: 100;
+  padding: 14px;
+  background: var(--fg);
+  color: var(--bg);
+}
+.skip-link:focus { top: 15px; }
+
+.shortcut-dialog {
+  background: var(--bg);
+  color: var(--fg);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  width: min(620px, calc(100% - 30px));
+  padding: 0;
+  max-height: 80svh;
+  position: fixed;
+  inset: 0;
+  margin: auto;
+}
+.shortcut-dialog::backdrop {
+  background: #0008;
+  backdrop-filter: blur(10px);
+}
+.command-search {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border-bottom: 1px solid var(--blue-line);
+  padding: 16px;
+}
+.command-search label {
+  color: var(--muted);
+  white-space: nowrap;
+}
+.command-search input {
+  background: none;
+  border: none;
+  color: var(--fg);
+  min-width: 0;
+  width: 100%;
+  outline-offset: 2px;
+  caret-color: var(--accent);
+  font-size: 16px;
+  min-height: 32px;
+}
+.command-search input::placeholder { color: var(--muted); }
+.command-search button {
+  background: none;
+  border: 1px solid var(--line);
+  padding: 7px;
+  font-size: 9px;
+  min-height: 36px;
+}
+.command-label {
+  padding: 18px 20px 9px;
+  color: var(--muted);
+  font-size: 9px;
+}
+#command-results { padding: 0 8px 12px; }
+#command-results > button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: none;
+  border: 0;
+  border-radius: 6px;
+  width: 100%;
+  min-height: 48px;
+  padding: 12px;
+  font-size: 15px;
+  text-align: left;
+  gap: 15px;
+}
+#command-results > button span {
+  font-size: 9px;
+  color: var(--muted);
+}
+#command-results > button.selected {
+  background: var(--fg);
+  color: var(--bg);
+}
+#command-results > button.selected span { color: var(--bg); }
+.empty-results {
+  padding: 25px 15px;
+  color: var(--muted);
+  font-size: 14px;
+}
+.command-footer {
+  padding: 14px 20px;
+  border-top: 1px solid var(--line);
+  font-size: 9px;
+  color: var(--muted);
+  display: flex;
+  justify-content: space-between;
+}

@@ -1,0 +1,95 @@
+/* CAD Crosshair Cursor matching reference */
+@media (pointer: fine) {
+  html.has-cursor, html.has-cursor * {
+    cursor: none !important;
+  }
+}
+.cursor {
+  z-index: 999;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  position: fixed;
+  inset: 0;
+}
+.cursor.is-visible {
+  opacity: 1;
+}
+.cursor__h, .cursor__v {
+  background: var(--line);
+  position: absolute;
+}
+.cursor__h {
+  opacity: 0.55;
+  height: 1px;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+.cursor__v {
+  opacity: 0.55;
+  width: 1px;
+  top: 0;
+  bottom: 0;
+  left: 0;
+}
+.cursor__pt {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.cursor__ring {
+  border: 1.5px solid var(--fg);
+  background: var(--accent);
+  width: 8px;
+  height: 8px;
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  border-radius: 0;
+  outline: 0 solid transparent;
+  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              height 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              top 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              left 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              border-radius 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.2s ease,
+              background-color 0.2s ease,
+              outline 0.2s ease;
+}
+.cursor.is-hover .cursor__ring {
+  border-color: var(--accent);
+  background: transparent;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  top: -18px;
+  left: -18px;
+  outline: 1px solid #ffffff;
+  outline-offset: 1px;
+}
+.portfolio.light .cursor.is-hover .cursor__ring {
+  outline: 1px solid #181918;
+}
+.cursor.is-down .cursor__ring {
+  transform: scale(0.8);
+}
+.cursor__label {
+  white-space: nowrap;
+  color: var(--muted);
+  font-size: 9px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-family: var(--font-mono);
+  letter-spacing: 0.05em;
+  pointer-events: none;
+  transform: translate(14px, 10px);
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              color 0.2s ease,
+              opacity 0.2s ease;
+}
+.cursor.is-hover .cursor__label {
+  color: var(--accent);
+  transform: translate(26px, -8px);
+}
